@@ -1,14 +1,11 @@
 import math
 import random
+import sys
+import time
 
 
 def get_ints():
     return [int(x) for x in input().split(' ')]
-
-
-random.seed(456)
-n_nodes, n_edges = get_ints()
-edges = [set(get_ints()) for i in range(n_edges)]
 
 
 def contract(edge, edges, nodes_groups, keep_left=True):
@@ -40,8 +37,8 @@ def contract_n(edges, n, nodes_groups):
     return edges, nodes_groups
 
 
-def fast_min_cut(edges, n_nodes=n_nodes, nodes_groups=None):
-    if nodes_groups == None:
+def fast_min_cut(edges, n_nodes, nodes_groups=None):
+    if nodes_groups is None:
         nodes_groups = {n: frozenset([n]) for n in range(1, n_nodes + 1)}
 
     if n_nodes <= 2:
@@ -51,7 +48,7 @@ def fast_min_cut(edges, n_nodes=n_nodes, nodes_groups=None):
         rec = 2
         n = min(n_nodes - 2, math.ceil(1 + n_nodes / math.sqrt(rec)))
 
-        smallest_min_cut = n_edges
+        smallest_min_cut = sys.maxsize
         groups = []
         for _ in range(rec):
             rec_edges, rec_nodes_groups = contract_n(edges, n, nodes_groups)
@@ -65,14 +62,12 @@ def fast_min_cut(edges, n_nodes=n_nodes, nodes_groups=None):
         return smallest_min_cut, groups
 
 
-def find_num_min_cuts(edges, until=1400):
+def find_num_min_cuts(edges, n_nodes, start_time, max_time):
     smallest_min_cut = len(edges)
     all_nodes_groups = set()
 
-    i = 0
-    while i < until:
-        i += 1
-        min_cut, nodes_groups = fast_min_cut(edges)
+    while not started_since(start_time, max_time):
+        min_cut, nodes_groups = fast_min_cut(edges, n_nodes)
 
         if min_cut < smallest_min_cut:
             smallest_min_cut = min_cut
@@ -80,8 +75,21 @@ def find_num_min_cuts(edges, until=1400):
 
         elif min_cut == smallest_min_cut:
             all_nodes_groups.update(nodes_groups)
+
     return smallest_min_cut, len(all_nodes_groups) // 2
 
 
-min_cut, n = find_num_min_cuts(edges)
-print(min_cut, n)
+def started_since(start_time, max_time_sec):
+    return (time.time() - start_time) > max_time_sec
+
+
+def main():
+    start_time = time.time()
+    random.seed(start_time + 4)
+    n_nodes, n_edges = get_ints()
+    edges = [set(get_ints()) for _ in range(n_edges)]
+    min_cut, n = find_num_min_cuts(edges, n_nodes, start_time=start_time, max_time=14.7)
+    print(min_cut, n)
+
+
+main()
