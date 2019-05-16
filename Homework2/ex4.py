@@ -85,7 +85,7 @@ def started_since(start_time, max_time_sec):
 
 def main():
     start_time = time.time()
-    random.seed(start_time + 4)
+    random.seed(start_time + 3)
     n_nodes, n_edges = get_ints()
     edges = [set(get_ints()) for _ in range(n_edges)]
     min_cut, n = find_num_min_cuts(edges, n_nodes, start_time=start_time, max_time=14.7)
