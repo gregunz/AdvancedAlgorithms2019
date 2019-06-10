@@ -1,6 +1,6 @@
 # Advanced Algorithms Course (CS-450 @EPFL) Spring 2019 - Homework
 
-#[1.](1_HikingTrails.py) Three-way Hiking Trails
+# [1.](1_HikingTrails.py) Three-way Hiking Trails
 
 It's the second year of your job as the Swiss Hiking Minister. During the past year, you managed to complete the first phase of an ambitious new project - a network of Three-way Hiking Trails! Each 3-way hiking trail connects three different mountain huts, and you have *m* such trails and *n* mountain huts numbered 1 to *n*.
 
