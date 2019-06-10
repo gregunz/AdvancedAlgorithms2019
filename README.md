@@ -40,7 +40,7 @@ If there are many possible correct solutions, you may output any of them.
 
 You are given a connected undirected graph (with possibly multiple edges between the same pair of vertices). Using Karger's min-cut algorithm, find and return the size of the minimum cut in the graph, as well as the number of minimum cuts.
 
-### Input
+### Input
 
 The first line of the input contains two space-separated integers n and m (2 ≤ n ≤ 100, 1 ≤ m ≤ 400) – the number of vertices and the number of edges, respectively. The next m lines describe the edges. Each such line contains two space-separated integers a and b (1 ≤ a, b ≤ n, a ≠ b) – endpoints of the edge. There may be multiple edges between the same pair of vertices. The graph is connected.
 
